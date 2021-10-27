@@ -28,6 +28,8 @@ jobs:
       with:
         name: my-artifact
         path: target
+    - name: create some delay for uploading the artifact
+      run: sleep 30
 
   build-and-push-image:
     runs-on: ubuntu-latest
