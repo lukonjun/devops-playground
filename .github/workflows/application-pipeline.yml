@@ -1,0 +1,45 @@
+name: Application Pipeline; build, test and deploy the greetings application
+on:
+  push:
+    branches: [main]
+    paths:
+    - hello-world/**
+  pull_request:
+    branches: [main]
+    paths:
+    - hello-world/**
+
+defaults:
+  run:
+    working-directory: ./hello-world
+
+jobs:
+  compile-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.14
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.14
+    - name: Build jar with Maven
+      run: mvn clean install
+    - uses: actions/upload-artifact@v2
+      with:
+        name: my-artifact
+        path: target
+
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/download-artifact@master
+      with:
+        name: my-artifact
+        path: target
+    - name: Build Container Image
+      run: docker build --tag ghcr.io/lukonjun/hello-world:${{ github.sha }} .
+    - name: Login to GitHub Container Registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
+    - name: Run docker push
+      run: docker push ghcr.io/lukonjun/metrics-collector:${{ github.run_id }}
