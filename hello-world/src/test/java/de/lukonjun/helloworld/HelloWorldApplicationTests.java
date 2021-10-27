@@ -21,7 +21,7 @@ class HelloWorldApplicationTests {
 
 	@Test
 	void anotherTest() {
-		assertTrue(greetingsController.toString().contains("Hello"));
+		assertTrue(greetingsController.greetings().contains("Hello"));
 	}
 
 	@Test

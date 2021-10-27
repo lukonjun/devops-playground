@@ -34,8 +34,8 @@
 			<version>2.5.0</version>
 		</dependency>
 	</dependencies>
-
 	<build>
+		<finalName>application</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
