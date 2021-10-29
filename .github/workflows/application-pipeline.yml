@@ -33,6 +33,7 @@ jobs:
       run: sleep 30
 
   build-and-push-image:
+    needs: compile-and-test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -48,7 +49,8 @@ jobs:
       run: docker push ghcr.io/lukonjun/metrics-collector:${{ github.run_id }}
 
   deploy-infrastructure:
-  # From https://learn.hashicorp.com/tutorials/terraform/github-actions
+    # From https://learn.hashicorp.com/tutorials/terraform/github-actions
+    needs: build-and-push-image
     runs-on: ubuntu-latest
     steps: 
     - name: Checkout
