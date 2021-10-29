@@ -10,7 +10,7 @@ terraform {
 # Configure the AWS Provider
 provider "aws" {
   region = "us-east-1"
-  
+
 }
 
 # VPC (Virtual Private Cloud)
@@ -34,15 +34,15 @@ resource "aws_route_table" "prod-route-table" {
   vpc_id = aws_vpc.prod-vpc.id
 
   route {
-      # Route all Traffic to the internet gateway
-      cidr_block = "0.0.0.0/0"
-      gateway_id = aws_internet_gateway.gw.id
+    # Route all Traffic to the internet gateway
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw.id
   }
-  route{
-      ipv6_cidr_block = "::/0"
-      gateway_id = aws_internet_gateway.gw.id
+  route {
+    ipv6_cidr_block = "::/0"
+    gateway_id      = aws_internet_gateway.gw.id
   }
-  
+
 }
 # Subnet
 resource "aws_subnet" "subnet-1" {
@@ -66,27 +66,27 @@ resource "aws_security_group" "allow_web" {
   vpc_id      = aws_vpc.prod-vpc.id
 
   ingress {
-      description = "HTTPS"
-      from_port   = 443
-      to_port     = 443
-      protocol    = "tcp"
-      # Optional for later, restriction that only 
-      # the loadbalancer can reach the Ports in the Subnet
-      cidr_blocks = ["0.0.0.0/0"]
+    description = "HTTPS"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    # Optional for later, restriction that only 
+    # the loadbalancer can reach the Ports in the Subnet
+    cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-      description = "HTTP"
-      from_port   = 80
-      to_port     = 80
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-      description = "SSH"
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   # Allow all Egress Traffic 
