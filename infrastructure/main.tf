@@ -51,7 +51,7 @@ resource "aws_subnet" "subnet-1" {
   availability_zone = "us-east-1a"
 
   tags = {
-    Name = "production"
+    Name = "production-subnet"
   }
 }
 # Route Table Association
