@@ -18,7 +18,6 @@ defaults:
 jobs:
   deploy-infrastructure:
     # From https://learn.hashicorp.com/tutorials/terraform/github-actions
-    needs: compile-test-build-push
     runs-on: ubuntu-latest
     steps: 
     - name: Checkout
