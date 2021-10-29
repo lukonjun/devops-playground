@@ -15,7 +15,7 @@ defaults:
     working-directory: ./hello-world
 
 jobs:
-  compile-and-test:
+  compile-test-build-push:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -25,22 +25,6 @@ jobs:
         java-version: 1.14
     - name: Build jar with Maven
       run: mvn clean install
-    - uses: actions/upload-artifact@v2
-      with:
-        name: my-artifact
-        path: target
-    - name: create some delay for uploading the artifact
-      run: sleep 30
-
-  build-and-push-image:
-    needs: compile-and-test
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/download-artifact@master
-      with:
-        name: my-artifact
-        path: target
     - name: Build Container Image
       run: docker build --tag ghcr.io/lukonjun/hello-world:${{ github.sha }} .
     - name: Login to GitHub Container Registry
@@ -50,7 +34,7 @@ jobs:
 
   deploy-infrastructure:
     # From https://learn.hashicorp.com/tutorials/terraform/github-actions
-    needs: build-and-push-image
+    needs: compile-test-build-push
     runs-on: ubuntu-latest
     steps: 
     - name: Checkout
