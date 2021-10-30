@@ -150,8 +150,8 @@ output "server_public_ip" {
   value = aws_instance.web-server-instance.public_ip
 }
 
-variable "subnet_prefix" {
-  description = "cidr block for the subnet"
-  #default
-  #type = String
-}
+# variable "subnet_prefix" {
+#   description = "cidr block for the subnet"
+#   #default
+#   #type = String
+# }
