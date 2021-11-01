@@ -32,3 +32,15 @@ jobs:
     - name: Run docker push
       run: docker push ghcr.io/lukonjun/hello-world:${{ github.run_id }}
       
+  deploy-to-infrastructure:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: create file with ssh key
+      run: |
+        mkdir ~/.ssh
+        touch ~/.ssh/id_rsa
+        echo '${{ secrets.AWS_PRIVATE_KEY }}' >> ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+    - name: install ansible docker modul
+      run: ansible-galaxy collection install community.docker

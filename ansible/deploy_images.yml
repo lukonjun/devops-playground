@@ -1,0 +1,13 @@
+- hosts: application-server
+  become: yes
+  vars:
+    image_name: ghcr.io/lukonjun/hello-world:1400535998
+    username: lukonjun 
+    token: 1234
+  tasks:
+    - name: login to github registry
+      shell: "docker login -u {{ lukonjun }} -p {{ token }} ghcr.io"
+    - name: delete if existing
+      shell: docker rm -f greetings-application 2>&1 >/dev/null
+    - name: run container
+      shell: "docker run -p 80:80 -d --name greetings-application {{ image_name }}"
