@@ -20,7 +20,7 @@ public class GreetingsController {
         return InetAddress.getLocalHost().toString();
     }
 
-    @GetMapping("/")
+    @GetMapping("/check")
     public String loadBalancerCheck() {
         return "check";
     }
