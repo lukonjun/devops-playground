@@ -44,9 +44,6 @@ jobs:
         touch ~/.ssh/id_rsa
         echo '${{ secrets.AWS_PRIVATE_KEY }}' >> ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-    - name: test
-      run: ls
-      working-directory: ./ansible
     - name: run ansible script 
-      run: ansible-playbook -i hosts deploy_images.yml --extra-vars "token=${{ secrets.UPLOAD_IMAGE_TOKEN }}"
+      run: ansible-playbook -i hosts.ini deploy_images.yml --extra-vars "token=${{ secrets.UPLOAD_IMAGE_TOKEN }}"
       working-directory: ./ansible
