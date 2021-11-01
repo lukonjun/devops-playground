@@ -6,7 +6,7 @@
     token: 1234
   tasks:
     - name: login to github registry
-      shell: "docker login -u {{ lukonjun }} -p {{ token }} ghcr.io"
+      shell: "docker login -u {{ username }} -p {{ token }} ghcr.io"
     - name: delete if existing
       shell: docker rm -f greetings-application 2>&1 >/dev/null
     - name: run container
