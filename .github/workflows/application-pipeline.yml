@@ -34,6 +34,8 @@ jobs:
       
   deploy-to-infrastructure:
     runs-on: ubuntu-latest
+    needs:
+      - compile-test-build-push
     steps:
     - uses: actions/checkout@v2
     - name: create file with ssh key
@@ -42,5 +44,6 @@ jobs:
         touch ~/.ssh/id_rsa
         echo '${{ secrets.AWS_PRIVATE_KEY }}' >> ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-    - name: install ansible docker modul
-      run: ansible-galaxy collection install community.docker
+    - name: run ansible script 
+      run: ansible-playbook -i hosts deploy_images.yml --extra-vars "token=${{ secrets.UPLOAD_IMAGE_TOKEN }}"
+      working-directory: ./ansible
