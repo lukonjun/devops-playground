@@ -10,4 +10,4 @@
     - name: delete if existing
       shell: docker rm -f greetings-application 2>&1 >/dev/null
     - name: run container
-      shell: "docker run -p 80:80 -d --name greetings-application {{ image_name }}"
+      shell: "docker run -p 80:80 -d -e SERVER_PORT='80' --name greetings-application {{ image_name }}"
