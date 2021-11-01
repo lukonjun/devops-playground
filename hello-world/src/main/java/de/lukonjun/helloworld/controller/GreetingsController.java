@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.net.http.HttpResponse;
 
 @RestController
 public class GreetingsController {
@@ -17,6 +18,11 @@ public class GreetingsController {
     @GetMapping("/host")
     public String host() throws UnknownHostException {
         return InetAddress.getLocalHost().toString();
+    }
+
+    @GetMapping("/")
+    public String loadBalancerCheck() {
+        return "check";
     }
 
 }
