@@ -45,5 +45,5 @@ jobs:
         echo '${{ secrets.AWS_PRIVATE_KEY }}' >> ~/.ssh/demo-aws
         chmod 600 ~/.ssh/demo-aws
     - name: run ansible script 
-      run: ansible-playbook -i host.ini deploy_images.yml --extra-vars "token=${{ secrets.GITHUB_TOKEN }}"
+      run: ansible-playbook -i host.ini deploy_images.yml --extra-vars "token=${{ secrets.GITHUB_TOKEN }} image_name=ghcr.io/lukonjun/hello-world:${{ github.run_id }}"
       working-directory: ./ansible
