@@ -24,10 +24,9 @@ public class GreetingsController {
     public String loadBalancerCheck() {
         return "check";
     }
-    /*
+    
     @GetMapping("/anotherGreeting")
     public String anotherGreeting() {
         return "Hi again!";
     }
-    */
 }
